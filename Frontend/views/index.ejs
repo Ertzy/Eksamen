@@ -1,0 +1,122 @@
+<%- include('./partials/header.ejs')  %>
+
+<a href="smoothies">Smott</a>
+
+<% if (user) { %>
+    <div class="form-container">
+        <h1 class="h1submit">Submit quote</h1>
+        <form class="publishform">
+            <label for="text">Text (max 100 ord):</label>
+            <textarea name="text" id="text" for="value" rows="4" maxlength="500" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    
+
+        <h1>Quotes</h1> <br><br>
+    </div>
+    <div class="contentList">
+    </div>
+
+
+
+
+
+<% } else{%>
+    <div class="onePost">
+    </div>
+
+<% } %>
+<script defer>
+    const form = document.querySelector('.publishform')
+    const liste = document.querySelector('.onePost')
+    const list = document.querySelector('.contentList')
+    const link = "http://localhost:6969"
+
+    function refresh(){
+        location.reload(true);
+    }
+    async function getOneRandomPost(){ 
+        const response = await fetch(`${link}/post`) 
+        const post = await response.json();
+
+        liste.innerHTML = ''; // Clear previous content
+
+        post.forEach(p => {
+            liste.innerHTML +=  `
+                 <div>
+                      <h2 class="quotes">${p.value}</h2>             
+                 </div>  
+            `
+        });
+
+        
+    } 
+    getOneRandomPost();
+    
+    form.addEventListener('submit', async(e)=>{
+        e.preventDefault();
+        
+        const content = document.querySelector('#text').value;    
+
+        
+        try{
+            const res = await fetch(`${link}/add`, {
+                method: 'POST',
+                body: JSON.stringify({content}),
+                headers: {'Content-type': 'application/json'}
+            });
+            const data = await res.json()
+            console.log(data)
+        }
+        catch (err) {
+            console.log(err)
+        } 
+        finally {
+        refresh();
+        }
+    })
+    async function getAllPosts(){ 
+        const response = await fetch(`${link}/posts`) 
+        const posts = await response.json();
+
+        list.innerHTML = ''; // Clear previous content
+
+        posts.forEach(p => {
+            list.innerHTML +=  `
+                 <div>
+                      <h2 class="quotes">${p.value}</h2>
+                 </div>  
+            `
+        });
+    } 
+    // <button onclick=deletes('${p._id}')>Delete</button>
+    getAllPosts();
+    
+
+
+    async function deletes(id){
+            console.log(id)
+            try{
+                const res = await fetch(`${link}/delete`, {
+                    method: 'POST',
+                    body: JSON.stringify({id}),
+                    headers: {'Content-type': 'application/json'}
+                });
+                const data = await res.json()
+                console.log(data)
+                
+            }
+            catch (err) {
+                console.log(err)
+            }
+            finally{
+                refresh()
+            }
+
+        }
+
+
+
+</script>
+
+<%- include('./partials/footer.ejs')  %>
