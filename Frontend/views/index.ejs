@@ -1,32 +1,29 @@
 <%- include('./partials/header.ejs')  %>
 
-<a href="smoothies">Smott</a>
-
-<% if (user) { %>
-    <div class="form-container">
-        <h1 class="h1submit">Submit quote</h1>
-        <form class="publishform">
-            <label for="text">Text (max 100 ord):</label>
-            <textarea name="text" id="text" for="value" rows="4" maxlength="500" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    
-
-        <h1>Quotes</h1> <br><br>
-    </div>
+<% for(post of posts){ %>
     <div class="contentList">
+        
+        <div class="titledelete">
+            <h1 class="quotes"><%= post.title%> </h1>            
+        </div>
+        <div class="textusername">
+            <h2 class="quotes"><%= post.text %> - <span><%= post.username %></span></h2> 
+            <p class="postusername"></p>
+        </div>
     </div>
-
-
-
-
-
-<% } else{%>
-    <div class="onePost">
-    </div>
-
 <% } %>
-<script defer>
+<% if(posts.length >= count){ %>
+    <h2>No more posts available</h2>
+<% } else{ %>
+    <form method="POST">
+        <input type="hidden" name="id" value= 5></input>
+        <button>...</button>
+    </form>
+<% } %>
+
+
+
+<!-- <script defer>
     const form = document.querySelector('.publishform')
     const liste = document.querySelector('.onePost')
     const list = document.querySelector('.contentList')
@@ -35,34 +32,16 @@
     function refresh(){
         location.reload(true);
     }
-    async function getOneRandomPost(){ 
-        const response = await fetch(`${link}/post`) 
-        const post = await response.json();
-
-        liste.innerHTML = ''; // Clear previous content
-
-        post.forEach(p => {
-            liste.innerHTML +=  `
-                 <div>
-                      <h2 class="quotes">${p.value}</h2>             
-                 </div>  
-            `
-        });
-
-        
-    } 
-    getOneRandomPost();
     
     form.addEventListener('submit', async(e)=>{
         e.preventDefault();
-        
-        const content = document.querySelector('#text').value;    
-
-        
+        const title = document.querySelector('#title').value;
+        const content = document.querySelector('#text').value; 
+        const bruker = user.username;
         try{
             const res = await fetch(`${link}/add`, {
                 method: 'POST',
-                body: JSON.stringify({content}),
+                body: JSON.stringify({content, title, bruker}),
                 headers: {'Content-type': 'application/json'}
             });
             const data = await res.json()
@@ -75,7 +54,7 @@
         refresh();
         }
     })
-    async function getAllPosts(){ 
+    async function getTenPosts(){ 
         const response = await fetch(`${link}/posts`) 
         const posts = await response.json();
 
@@ -84,13 +63,15 @@
         posts.forEach(p => {
             list.innerHTML +=  `
                  <div>
-                      <h2 class="quotes">${p.value}</h2>
+                    <h2 class ="quotes">${p.title}</h2>
+                    <p class="quotes">${p.value}</p>
+                    <button onclick=deletes('${p._id}')>Delete</button>
                  </div>  
             `
         });
     } 
     // <button onclick=deletes('${p._id}')>Delete</button>
-    getAllPosts();
+    getTenPosts();
     
 
 
@@ -117,6 +98,6 @@
 
 
 
-</script>
+</script> -->
 
 <%- include('./partials/footer.ejs')  %>

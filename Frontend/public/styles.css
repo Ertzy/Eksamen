@@ -7,30 +7,55 @@ label{
   display: block;
 }
 
+p{
+  font-size: 20px;
+}
+
+h2, label{
+  text-align: center;
+  padding-top: 20px;
+}
+
 nav{
   color: white;
   display: flex;
   justify-content: right;
   align-items: center;
-  padding: 20px 0;
+  padding: 15px 0;
   background-color: #24252A;
 }
 
-.contentlist, .onePost{
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-  display: grid;
-  max-width: 50%;
-  border: 1px black;
+span{
+  font-style: italic;
 }
-.onePost{
-  padding-top: 10%;
-  font-size: 50px;
+
+.contentlist{
+  margin: 20px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  border: 1px solid black;
+}
+
+.textusername{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.contentlist h2{
+  text-align: left;
+}
+.titledelete{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .bitt{
-  padding: 0 35%;
+  padding: 0 30%;
   font-size: 30px;
 }
 
@@ -61,7 +86,7 @@ a{
   align-items: center;
   display: grid;
   max-width: 50%;
-  padding-top: 8%;
+  padding-top: 6%;
 }
 
 .dontusr{
@@ -93,10 +118,7 @@ button {
 }
 
 
-h2, label{
-  text-align: center;
-  padding-top: 20px;
-}
+
 
 .ned{
   padding-top: 30px;
@@ -104,4 +126,6 @@ h2, label{
 
 .quotes{
   padding: 20px;
+  display: inline;
 }
+

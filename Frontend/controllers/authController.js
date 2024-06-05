@@ -38,6 +38,49 @@ const createToken = (id) => {
     })
 }
 
+module.exports.user_side_posts = async (req, res) =>{
+    const username = req.params.username;
+    const posts = req.posts.posts;
+    const userprofile = await User.findOne({username});
+
+
+    if(!userprofile){
+        res.render('profile', {userprofile:null})
+    } else{
+        res.render('profile', {userprofile, posts})
+    }
+}
+
+module.exports.user_homepage = async (req, res) =>{
+    const username = req.params.username;
+    let bruker;
+
+    if(req.user) {
+         bruker = req.user.username
+    }
+    const posts = req.posts.posts;
+    const userprofile = await User.findOne({username});
+
+    let isUser = false;
+
+    if(username === bruker){
+        console.log('username og bruker er like');
+        isUser = true;
+    } else{
+        console.log('username og bruker er ikke like');
+    }
+    if(!userprofile){
+        res.render('homeuser', {userprofile:null})
+    } else{
+        res.render('homeuser', {userprofile, isUser, posts})
+    }
+}
+
+
+module.exports.userside_get = (req, res)=>{
+    res.render(':username')
+}
+
 module.exports.signup_get = (req, res) => {
     res.render('signup')
 }
@@ -80,3 +123,4 @@ module.exports.logout_get = (req, res) =>{
     res.cookie('newCookie', '', { maxAge: 1 });
     res.redirect('/');
 } 
+
