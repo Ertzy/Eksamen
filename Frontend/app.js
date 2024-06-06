@@ -29,11 +29,9 @@ app.get('/', getPosts, async (req, res) => {
 
 
 app.post('/home/:username', checkUser, async(req, res)=>{
-    console.log(req.body.id)
     const id = req.body.id;
     let username = req.user.username;
     const deleted = await delate(id)
-    console.log(deleted)
     if(deleted.acknowledged){
         res.status(200).redirect(`/home/${username}`)
     }

@@ -56,7 +56,6 @@ const delate = async (id) =>{
     console.log(id)
     try {
         const del = await visualScreen.deleteOne({_id: id})
-        console.log(del)
         return del
         
     } catch (error) {

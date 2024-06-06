@@ -23,7 +23,7 @@
                 <h1 class="quotes"><%= post.title%> </h1>            
                 <form method="POST">
                     <input type="hidden" name="id" value='<%= post._id %>'></input>
-                    <button>SLETT MEG</button>
+                    <button class="deletebutton">Delete</button>
                 </form>
             </div>
             <div class="textusername">
@@ -40,5 +40,8 @@
     .noexist{
         text-align: center;
         padding-top: 100px;
+    }
+    .deletebutton{
+        background-color: red;
     }
 </style>
